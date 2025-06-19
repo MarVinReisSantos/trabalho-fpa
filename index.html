@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundamentos de Projeto e Análise de Algoritmos</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Fundamentos de Projeto e Análise de Algoritmos</h1>
+    <p><strong>Problema:</strong> Encontrar todas as maiores subsequências comuns entre duas sequências de eventos de Helena e Marcus.</p>
+
+    <div class="input-group">
+      <label for="helena">Eventos de Helena:</label>
+      <input type="text" id="helena" maxlength="80" placeholder="Ex: ijkijkii">
+    </div>
+    
+    <div class="input-group">
+      <label for="marcus">Eventos de Marcus:</label>
+      <input type="text" id="marcus" maxlength="80" placeholder="Ex: ikjikji">
+    </div>
+
+    <button onclick="processarSequencias()">Processar</button>
+
+    <div class="error" id="error"></div>
+
+    <div class="output" id="output"></div>
+    
+    <div class="explicacao">
+      <h3>Como funciona a solução:</h3>
+      <p><strong>Programação dinâmica:</strong> é utilizada para construir uma matriz (tabela) que armazena os comprimentos das maiores subsequências comuns entre prefixos das duas sequências. Essa etapa evita cálculos repetidos, melhorando o desempenho da solução.</p>
+      <p><strong>Backtracking:</strong> após a construção da matriz, usamos um algoritmo de exploração recursiva para reconstruir todas as subsequências que correspondem ao comprimento máximo encontrado. Ele navega pela matriz, retornando todas as combinações possíveis sem repetições.</p>
+      <p>Essa combinação garante eficiência (graças à programação dinâmica) e exaustividade (graças ao backtracking).</p>
+    </div>
+  </div>
+  <script src="/assets/script.js"></script>
+</body>
+</html>
