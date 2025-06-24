@@ -30,6 +30,35 @@ function processarSequencias() {
   outputDiv.innerText = resultados.join("\n");
 }
 
+function validarEntradaNumerica(str) {
+  // Função que valida se a entrada é um número inteiro entre 1 e 10
+
+  const num = parseInt(str, 10);
+  return !isNaN(num) && num >= 1 && num <= 10;
+}
+
+function processarSequenciasDinamico(){
+  // Função que obtém o número de entradas, valida, gera os campos de entrada e processa as sequências
+
+  // Obtém o valor do campo de entrada em string e remove espaços em branco
+  const d_str = document.getElementById("numEntradas").value.trim();
+  const errorDiv = document.getElementById("error");
+
+  // Chama a função de validação para verificar se o número de entradas é válido
+  if (!validarEntradaNumerica(d_str)) {
+    // Se a validação falhar, exibe uma mensagem de erro
+    errorDiv.innerText = "O número de entradas deve ser um inteiro entre 1 e 10.";
+    return;
+  }
+  // Se a validação passar, converte a string para número inteiro
+  const d = parseInt(d_str, 10);
+  // Limpa o campo de erro
+  errorDiv.innerText = "";
+
+  
+}
+
+
 // Cria uma matriz dp para armazenar o comprimento das subsequências comuns entre prefixos de a e b
 function construirMatrizDP(a, b) {
   const m = a.length, n = b.length;
