@@ -11,18 +11,15 @@
     <h1>Fundamentos de Projeto e Análise de Algoritmos</h1>
     <p><strong>Problema:</strong> Encontrar todas as maiores subsequências comuns entre duas sequências de eventos de Helena e Marcus.</p>
 
-    <div class="input-group">
-      <label for="helena">Eventos de Helena:</label>
-      <input type="text" id="helena" maxlength="80" placeholder="Ex: ijkijkii">
+    <div class="input-group"> 
+      <label for="numEntradas">Número de entradas:</label>
+      <input type="number" id="numEntradas" min="1" max="10" placeholder="Ex: 3">
+      <button onclick="processarSequenciasDinamico()">Confirmar</button>
     </div>
     
-    <div class="input-group">
-      <label for="marcus">Eventos de Marcus:</label>
-      <input type="text" id="marcus" maxlength="80" placeholder="Ex: ikjikji">
-    </div>
-
-    <button onclick="processarSequencias()">Processar</button>
-
+    <div id="sequenciaInputs"></div>
+    
+  
     <div class="error" id="error"></div>
 
     <div class="output" id="output"></div>
