@@ -22,13 +22,13 @@ function validarEntradaNumerica(str) {
 }
 
 // Função que coleta os dados da interface atual, valida, chama os algoritmos e armazena os resultados
-function processarSequenciaAtual(botaoClicado) {
+function processarSequenciaAtual() {
   const helena = document.getElementById("helena").value.trim();
   const marcus = document.getElementById("marcus").value.trim();
   const errorDiv = document.getElementById("error");
   const outputDiv = document.getElementById("output");
   const proxBtn = document.getElementById("proxBtn");
-  const botaoClicadoId = botaoClicado.id;
+
 
   errorDiv.innerText = "";
   outputDiv.innerText = "";
@@ -38,18 +38,9 @@ function processarSequenciaAtual(botaoClicado) {
     errorDiv.innerText = "As sequências devem conter apenas letras minúsculas de 'a' a 'z' e ter até 80 caracteres.";
     return;
   }
-  var resultados = [];
-  if(botaoClicadoId === "dyn_prog") {
-    // Solução com Programação Dinâmica
-    var dp = construirMatrizDP(helena, marcus);
-    resultados = dp[helena.length][marcus.length];
-  }
-  else if(botaoClicadoId === "dpbt") {
-    // Solução com Backtracking e Programação Dinâmica
-    resultados = encontrarLCS(helena, marcus);
-  }
-  
-  // Ordena os resultados para exibição
+
+  // Chama a função principal de LCS e exibe o resultado ordenado
+  const resultados = encontrarLCS(helena, marcus);
   resultados.sort();
   outputDiv.innerText = resultados.join("\n");
 
@@ -155,8 +146,7 @@ function gerarCamposEntrada() {
       <input type="text" id="marcus" maxlength="80" placeholder="Ex: ikjikji">
     </div>
 
-    <button onclick="processarSequenciaAtual(this)" id="dpbt">Processar DP+BT</button>
-    <button onclick="processarSequenciaAtual(this)" id="dyn_prog">Processar DP</button><br><br>
+    <button onclick="processarSequenciaAtual()">Processar</button>
     <div class="output" id="output"></div>
   `;
   document.getElementById("output").innerText = "";
