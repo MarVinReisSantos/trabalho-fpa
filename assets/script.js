@@ -1,20 +1,35 @@
 // Cabeçalho
-// Autores: Gabriel, Marcos, Riquelme
-// Versão: 1.3
-// Data: 19 de junho de 2025
+// Autores: Gabriel, Marcos, Riquelme, Victor
+// Versão: 1.4
+// Data: 24 de junho de 2025
 // Descrição: Interface gráfica que encontra todas as maiores subsequências comuns entre duas strings usando DP + backtracking
+
+
+let iteracaoAtual = 0; // Variável global para controlar a iteração atual
+let sequenciasGeradas = []; // Variável global para armazenar as sequências geradas
+let maxIteracoes = 0; // Variável global para armazenar o número máximo de iterações
 
 // Função que valida se a entrada possui apenas letras minúsculas e até 80 caracteres
 function validarEntrada(str) {
   return /^[a-z]{1,80}$/.test(str);
 }
 
-// Função principal que coleta os dados da interface, valida e chama os algoritmos
-function processarSequencias() {
+// Função que valida se a entrada é um número inteiro entre 1 e 10
+function validarEntradaNumerica(str) {
+
+  const num = parseInt(str, 10);
+  return !isNaN(num) && num >= 1 && num <= 10;
+}
+
+// Função que coleta os dados da interface atual, valida, chama os algoritmos e armazena os resultados
+function processarSequenciaAtual() {
   const helena = document.getElementById("helena").value.trim();
   const marcus = document.getElementById("marcus").value.trim();
   const errorDiv = document.getElementById("error");
   const outputDiv = document.getElementById("output");
+  const proxBtn = document.getElementById("proxBtn");
+
+
   errorDiv.innerText = "";
   outputDiv.innerText = "";
 
@@ -28,6 +43,116 @@ function processarSequencias() {
   const resultados = encontrarLCS(helena, marcus);
   resultados.sort();
   outputDiv.innerText = resultados.join("\n");
+
+  // Armazena a sequência atual
+  sequenciasGeradas[iteracaoAtual] = { iteracao: iteracaoAtual + 1, helena, marcus, resultados };
+
+  if (iteracaoAtual < maxIteracoes - 1) {
+    // Mostra o botao proximo apos confirmar que a entrada é válida
+    proxBtn.style.display = "block";
+  }
+  else {
+    // Se for a última iteração, esconde o botão e exibe o botão de reiniciar
+    proxBtn.style.display = "block";
+    proxBtn.innerText = "Ver resultados";
+    proxBtn.onclick = mostrarResultados;
+  }
+}
+
+// Função que avança para a próxima iteração, atualizando a interface e os dados
+function proximaIteracao() {
+  iteracaoAtual++;
+  gerarCamposEntrada();
+}
+
+
+// Função principal que obtém o número de entradas, valida, gera os campos de entrada e processa as sequências
+function processarSequenciasDinamico(){
+
+  // Obtém o valor do campo de entrada em string e remove espaços em branco
+  const d_str = document.getElementById("numEntradas").value.trim();
+  const errorDiv = document.getElementById("error");
+
+  // Chama a função de validação numerica para verificar se o número de entradas é válido
+  if (!validarEntradaNumerica(d_str)) {
+    // Se a validação falhar, exibe uma mensagem de erro
+    errorDiv.innerText = "O número de entradas deve ser um inteiro entre 1 e 10.";
+    return;
+  }
+  // Se a validação passar, converte a string para número inteiro
+  maxIteracoes = parseInt(d_str, 10);
+  
+  errorDiv.innerText = ""; // Limpa a mensagem de erro caso exista
+  document.getElementById("entradasForm").style.display = "none";
+  gerarCamposEntrada(); // Gera os campos de entrada para Helena e Marcus
+} 
+
+function mostrarResultados() {
+  // Função que exibe os resultados das sequências processadas
+  const sequenciaInputs = document.getElementById("sequenciaInputs");
+  sequenciaInputs.style.display = "none"; // Esconde os campos de entrada
+  document.getElementById("proxBtn").style.display = "none";
+  const resultadosDiv = document.getElementById("resultados");
+  resultadosDiv.style.display = "block"; // Mostra a div de resultados
+
+  htmlText = "";
+  // Itera sobre as sequências geradas e constrói o HTML para exibição
+  for (const seq of sequenciasGeradas) {
+    htmlText += `<b>Iteração ${seq.iteracao}:</b><br>`;
+    htmlText += `Eventos de Helena: <span class="helena">${seq.helena}</span><br>`;
+    htmlText += `Eventos de Marcus: <span class="marcus">${seq.marcus}</span><br>`;
+    htmlText += `Subsequências Comuns: <span class="resultado">${seq.resultados.join(", ")}</span><br><br>`;
+  }
+  resultadosDiv.innerHTML = htmlText; // Atualiza o conteúdo da div de resultados
+
+  // Adiciona o botão de reiniciar
+  resultadosDiv.innerHTML += `<button id="reiniciarBtn" onclick="reiniciar()">Reiniciar</button>`;
+
+}
+
+function reiniciar() {
+  // Função que reinicia o estado da aplicação, limpando as variáveis e a interface
+  iteracaoAtual = 0;
+  sequenciasGeradas = [];
+  maxIteracoes = 0;
+  document.getElementById("entradasForm").style.display = "block";
+  document.getElementById("sequenciaInputs").style.display = "none";
+  document.getElementById("resultados").style.display = "none";
+  document.getElementById("numEntradas").value = "";
+  const proxBtn = document.getElementById("proxBtn");
+  proxBtn.innerText = "Próximo";
+  proxBtn.onclick = proximaIteracao;
+  proxBtn.style.display = "none";
+}
+
+function gerarCamposEntrada() {
+  // Função que gera os campos de entrada para Helena e Marcus cada vez que é chamada
+
+  const container = document.getElementById("sequenciaInputs");
+
+  // Resolve problema de exibição do container apos reiniciar
+  container.style.display = "block";
+
+  // HTML para os campos de entrada
+  container.innerHTML = `
+    <b><p>Iteração ${iteracaoAtual + 1} de ${maxIteracoes}</p></b>
+  <div class="input-group">
+      <label for="helena">Eventos de Helena:</label>
+      <input type="text" id="helena" maxlength="80" placeholder="Ex: ijkijkii">
+    </div>
+    
+    <div class="input-group">
+      <label for="marcus">Eventos de Marcus:</label>
+      <input type="text" id="marcus" maxlength="80" placeholder="Ex: ikjikji">
+    </div>
+
+    <button onclick="processarSequenciaAtual()">Processar</button>
+    <div class="output" id="output"></div>
+  `;
+  document.getElementById("output").innerText = "";
+  document.getElementById("error").innerText = "";
+  // corrige problema de exibição do botão de próximo
+  document.getElementById("proxBtn").style.display = "none";
 }
 
 // Cria uma matriz dp para armazenar o comprimento das subsequências comuns entre prefixos de a e b
