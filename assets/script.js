@@ -156,22 +156,22 @@ function gerarCamposEntrada() {
 }
 
 // Cria uma matriz dp para armazenar o comprimento das subsequências comuns entre prefixos de a e b
-function construirMatrizDP(a, b) {
-  const m = a.length, n = b.length;
-  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      if (a[i - 1] === b[j - 1]) {
-        // Se os caracteres forem iguais, soma 1 ao valor da diagonal anterior
-        dp[i][j] = dp[i - 1][j - 1] + 1;
-      } else {
-        // Caso contrário, pega o maior valor entre cima ou esquerda
-        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+  function construirMatrizDP(a, b) {
+    const m = a.length, n = b.length;
+    const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (a[i - 1] === b[j - 1]) {
+          // Se os caracteres forem iguais, soma 1 ao valor da diagonal anterior
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+        } else {
+          // Caso contrário, pega o maior valor entre cima ou esquerda
+          dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
       }
     }
+    return dp;
   }
-  return dp;
-}
 
 // Função recursiva que reconstrói todas as subsequências usando backtracking
 function backtrack(dp, a, b, i, j, memo) {

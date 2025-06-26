@@ -4,7 +4,7 @@
 Fundamentos de Projeto e Análise de Algoritmos
 
 ## Integrantes
-- Gabriel, Marcos, Riquelme
+- Gabriel, Marcos, Riquelme, Victor
 
 ## Descrição
 Este projeto resolve o problema de encontrar todas as **maiores subsequências comuns (LCS)** entre duas sequências de eventos. É uma tarefa essencial em ambientes de análise de dados, onde diferentes fontes precisam ser sincronizadas com precisão.
@@ -71,9 +71,11 @@ Sim, os principais desafios foram:
 ## Como executar
 
 1. Abra o arquivo `.html` em um navegador moderno.
-2. Digite as duas sequências nos campos correspondentes.
-3. Clique em “Processar” para visualizar as subsequências comuns mais longas.
-
+2. Digite o número de iterações desejadas.
+3. Digite as duas sequências nos campos correspondentes.
+4. Clique em “Processar” para visualizar as subsequências comuns mais longas.
+5. Repita de acordo com o número inserido no passo 2.
+6. Verique os resultados finais com todas as iterações processadas.
 
 ---
 
